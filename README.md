@@ -19,6 +19,7 @@ Moving on to the next lecture, which was a bit harder to understand, we get in t
 I thought generators were very very cool. A very powerful example is shown in which sketch is used to generate a program that will reverse the bits in a 32 bit word using shifts and masks. The code with holes and generators is very pretty, and the generated code is rather ugly, especially with regards to the many underscores on all the variable names, yet super cool to see how the power of sketch was harnessed to make something meaningful. If you just glance at the generated code, it isn't clear what it's doing, yet it is also quite efficient. This example makes use of the function inlining, as the recursive generator just becomes a sequence of instructions. All in all, very neat to see how Sketch was able to take what seems almost like a specificiation and turn it into very efficient, albeit ugly, code.
 
 _The code for the generator function used in the next function_
+
 	generator void rep(int n, fun f)
 	{
 		if(n>0)
@@ -29,6 +30,7 @@ _The code for the generator function used in the next function_
 	}
 
 _The example in question_
+
 	bit[32] reverseSketch(bit[32] in)
 	{
 		bit[32]  t = in;
@@ -44,6 +46,7 @@ _The example in question_
 	}
 
 _The generated code_
+
 	void reverseSketch (bit[32] in, ref bit[32] _out)  implements reverse/*reverse.sk:7*/
 	{
 		bit[32] __sa0 = {0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1};
