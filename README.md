@@ -20,12 +20,19 @@ I thought generators were very very cool. A very powerful example is shown in wh
 
 _The code for the generator function used in the next function_
 `generator void rep(int n, fun f)
+
 {
+
 	if(n>0)
+
 	{
+
 		f();
+
 		rep(n - 1, f);
+
 	}
+
 }`
 
 _The example in question_
