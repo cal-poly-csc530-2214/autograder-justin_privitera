@@ -19,13 +19,13 @@ Moving on to the next lecture, which was a bit harder to understand, we get in t
 I thought generators were very very cool. A very powerful example is shown in which sketch is used to generate a program that will reverse the bits in a 32 bit word using shifts and masks. The code with holes and generators is very pretty, and the generated code is rather ugly, especially with regards to the many underscores on all the variable names, yet super cool to see how the power of sketch was harnessed to make something meaningful. If you just glance at the generated code, it isn't clear what it's doing, yet it is also quite efficient. This example makes use of the function inlining, as the recursive generator just becomes a sequence of instructions. All in all, very neat to see how Sketch was able to take what seems almost like a specificiation and turn it into very efficient, albeit ugly, code.
 
 _The code for the generator function used in the next function_
-`generator void rep(int n, fun f)  
-{  
-	if(n>0)  
-	{  
-		f();  
-		rep(n - 1, f);  
-	}  
+`generator void rep(int n, fun f)\n
+{\n
+	if(n>0)\n
+	{\n
+		f();\n
+		rep(n - 1, f);\n
+	}\n
 }`
 
 _The example in question_
