@@ -1,6 +1,6 @@
 # Automated Feedback Generation for Introductory Programming Assignments
 
-After much difficulty trying to build sketch, I decided to go a different route entirely. Rather than coding something, I opted to read some of the lecture notes you posted which happen to be very relevant to this topic (https://people.csail.mit.edu/asolar/SynthesisCourse/index.htm). I hope not coding anything won't get me in trouble! Here is a summary and my thoughts:
+After much difficulty trying to build Sketch, I decided to go a different route entirely. Rather than coding something, I opted to read some of the lecture notes you posted on piazza which happen to be very relevant to this week's paper (https://people.csail.mit.edu/asolar/SynthesisCourse/index.htm). I hope not coding anything won't get me in trouble! Here is a summary and my thoughts:
 
 ## Summary of Lecture 7 and 8
 
@@ -17,6 +17,47 @@ Moving on to the next lecture, which was a bit harder to understand, we get in t
 ## My Thoughts
 
 I thought generators were very very cool. A very powerful example is shown in which sketch is used to generate a program that will reverse the bits in a 32 bit word using shifts and masks. The code with holes and generators is very pretty, and the generated code is rather ugly, especially with regards to the many underscores on all the variable names, yet super cool to see how the power of sketch was harnessed to make something meaningful. If you just glance at the generated code, it isn't clear what it's doing, yet it is also quite efficient. This example makes use of the function inlining, as the recursive generator just becomes a sequence of instructions. All in all, very neat to see how Sketch was able to take what seems almost like a specificiation and turn it into very efficient, albeit ugly, code.
+
+_The code for the generator function used in the next function_
+`generator void rep(int n, fun f)
+{
+	if(n>0)
+	{
+		f();
+		rep(n - 1, f);
+	}
+}`
+
+_The example in question_
+`bit[32] reverseSketch(bit[32] in)
+{
+	bit[32]  t = in;
+	int s = 1;
+	generator void tmp()
+	{
+		bit[32] m = ??;
+		t = ((t << s) & m )| ((t >> s) & (~m));
+		s = s*??;
+	}
+	rep(??, tmp);
+	return t;
+}`
+
+_The generated code_
+`void reverseSketch (bit[32] in, ref bit[32] _out)  implements reverse/*reverse.sk:7*/
+{
+	bit[32] __sa0 = {0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1};
+	_out = ((in << 1) & __sa0) | ((in >> 1) & (~(__sa0)));
+	bit[32] __sa0_0 = {0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1};
+	_out = ((_out << 2) & __sa0_0) | ((_out >> 2) & (~(__sa0_0)));
+	bit[32] __sa0_1 = {0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1};
+	_out = ((_out << 4) & __sa0_1) | ((_out >> 4) & (~(__sa0_1)));
+	bit[32] __sa0_2 = {0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1};
+	_out = ((_out << 8) & __sa0_2) | ((_out >> 8) & (~(__sa0_2)));
+	bit[32] __sa0_3 = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
+	_out = ((_out << 16) & __sa0_3) | ((_out >> 16) & (~(__sa0_3)));
+	return;
+}`
 
 Holes seem to be the unsung heroes of many subfields of PL.
 
